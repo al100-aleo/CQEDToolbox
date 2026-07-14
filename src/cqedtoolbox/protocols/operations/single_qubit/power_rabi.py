@@ -42,6 +42,8 @@ class SNRThreshold(CorrectionParameter):
 
     def _qick_getter(self): return self.params.corrections.power_rabi.snr()
     def _qick_setter(self, v): self.params.corrections.power_rabi.snr(v)
+    def _dummy_getter(self): return self.params.corrections.power_rabi.snr()
+    def _dummy_setter(self, v): self.params.corrections.power_rabi.snr(v)
 
 
 @dataclass
@@ -51,6 +53,8 @@ class MaxFitParamError(CorrectionParameter):
 
     def _qick_getter(self): return self.params.corrections.power_rabi.max_fit_param_error()
     def _qick_setter(self, v): self.params.corrections.power_rabi.max_fit_param_error(v)
+    def _dummy_getter(self): return self.params.corrections.power_rabi.max_fit_param_error()
+    def _dummy_setter(self, v): self.params.corrections.power_rabi.max_fit_param_error(v)
 
 
 @dataclass
@@ -60,6 +64,8 @@ class AveragingIncreaseFactor(CorrectionParameter):
 
     def _qick_getter(self): return self.params.corrections.power_rabi.averaging_factor()
     def _qick_setter(self, v): self.params.corrections.power_rabi.averaging_factor(v)
+    def _dummy_getter(self): return self.params.corrections.power_rabi.averaging_factor()
+    def _dummy_setter(self, v): self.params.corrections.power_rabi.averaging_factor(v)
 
 
 @dataclass
@@ -69,6 +75,8 @@ class MaxAveragingIncreases(CorrectionParameter):
 
     def _qick_getter(self): return int(self.params.corrections.power_rabi.max_averaging_increases())
     def _qick_setter(self, v): self.params.corrections.power_rabi.max_averaging_increases(v)
+    def _dummy_getter(self): return int(self.params.corrections.power_rabi.max_averaging_increases())
+    def _dummy_setter(self, v): self.params.corrections.power_rabi.max_averaging_increases(v)
 
 
 @dataclass
@@ -78,6 +86,8 @@ class SamplingIncreaseFactor(CorrectionParameter):
 
     def _qick_getter(self): return self.params.corrections.power_rabi.sampling_factor()
     def _qick_setter(self, v): self.params.corrections.power_rabi.sampling_factor(v)
+    def _dummy_getter(self): return self.params.corrections.power_rabi.sampling_factor()
+    def _dummy_setter(self, v): self.params.corrections.power_rabi.sampling_factor(v)
 
 
 @dataclass
@@ -87,6 +97,8 @@ class MaxSamplingIncreases(CorrectionParameter):
 
     def _qick_getter(self): return int(self.params.corrections.power_rabi.max_sampling_increases())
     def _qick_setter(self, v): self.params.corrections.power_rabi.max_sampling_increases(v)
+    def _dummy_getter(self): return int(self.params.corrections.power_rabi.max_sampling_increases())
+    def _dummy_setter(self, v): self.params.corrections.power_rabi.max_sampling_increases(v)
 
 
 @dataclass
@@ -96,6 +108,8 @@ class DelayIncreaseFactor(CorrectionParameter):
 
     def _qick_getter(self): return self.params.corrections.power_rabi.delay_factor()
     def _qick_setter(self, v): self.params.corrections.power_rabi.delay_factor(v)
+    def _dummy_getter(self): return self.params.corrections.power_rabi.delay_factor()
+    def _dummy_setter(self, v): self.params.corrections.power_rabi.delay_factor(v)
 
 
 @dataclass
@@ -105,6 +119,8 @@ class MaxDelayIncreases(CorrectionParameter):
 
     def _qick_getter(self): return int(self.params.corrections.power_rabi.max_delay_increases())
     def _qick_setter(self, v): self.params.corrections.power_rabi.max_delay_increases(v)
+    def _dummy_getter(self): return int(self.params.corrections.power_rabi.max_delay_increases())
+    def _dummy_setter(self, v): self.params.corrections.power_rabi.max_delay_increases(v)
 
 
 @dataclass
@@ -114,6 +130,8 @@ class GainRangeShrinkFactor(CorrectionParameter):
 
     def _qick_getter(self): return self.params.corrections.power_rabi.gain_shrink_factor()
     def _qick_setter(self, v): self.params.corrections.power_rabi.gain_shrink_factor(v)
+    def _dummy_getter(self): return self.params.corrections.power_rabi.gain_shrink_factor()
+    def _dummy_setter(self, v): self.params.corrections.power_rabi.gain_shrink_factor(v)
 
 
 @dataclass
@@ -123,6 +141,8 @@ class MaxGainRangeShrinks(CorrectionParameter):
 
     def _qick_getter(self): return int(self.params.corrections.power_rabi.max_gain_shrinks())
     def _qick_setter(self, v): self.params.corrections.power_rabi.max_gain_shrinks(v)
+    def _dummy_getter(self): return int(self.params.corrections.power_rabi.max_gain_shrinks())
+    def _dummy_setter(self, v): self.params.corrections.power_rabi.max_gain_shrinks(v)
 
 
 # ---------------------------------------------------------------------------

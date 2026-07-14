@@ -63,6 +63,12 @@ class SNRThreshold(CorrectionParameter):
     def _qick_setter(self, value):
         self.params.corrections.res_spec.snr(value)
 
+    def _dummy_getter(self):
+        return self.params.corrections.res_spec.snr()
+
+    def _dummy_setter(self, value):
+        self.params.corrections.res_spec.snr(value)
+
 
 @dataclass
 class MaxWindowShifts(CorrectionParameter):
@@ -73,6 +79,12 @@ class MaxWindowShifts(CorrectionParameter):
         return int(self.params.corrections.res_spec.max_window_shifts())
 
     def _qick_setter(self, value):
+        self.params.corrections.res_spec.max_window_shifts(value)
+
+    def _dummy_getter(self):
+        return int(self.params.corrections.res_spec.max_window_shifts())
+
+    def _dummy_setter(self, value):
         self.params.corrections.res_spec.max_window_shifts(value)
 
 
@@ -87,6 +99,12 @@ class SamplingIncreaseFactor(CorrectionParameter):
     def _qick_setter(self, value):
         self.params.corrections.res_spec.sampling_factor(value)
 
+    def _dummy_getter(self):
+        return self.params.corrections.res_spec.sampling_factor()
+
+    def _dummy_setter(self, value):
+        self.params.corrections.res_spec.sampling_factor(value)
+
 
 @dataclass
 class MaxSamplingIncreases(CorrectionParameter):
@@ -97,6 +115,12 @@ class MaxSamplingIncreases(CorrectionParameter):
         return int(self.params.corrections.res_spec.max_sampling_increases())
 
     def _qick_setter(self, value):
+        self.params.corrections.res_spec.max_sampling_increases(value)
+
+    def _dummy_getter(self):
+        return int(self.params.corrections.res_spec.max_sampling_increases())
+
+    def _dummy_setter(self, value):
         self.params.corrections.res_spec.max_sampling_increases(value)
 
 
@@ -111,6 +135,12 @@ class AveragingIncreaseFactor(CorrectionParameter):
     def _qick_setter(self, value):
         self.params.corrections.res_spec.averaging_factor(value)
 
+    def _dummy_getter(self):
+        return self.params.corrections.res_spec.averaging_factor()
+
+    def _dummy_setter(self, value):
+        self.params.corrections.res_spec.averaging_factor(value)
+
 
 @dataclass
 class MaxAveragingIncreases(CorrectionParameter):
@@ -123,6 +153,12 @@ class MaxAveragingIncreases(CorrectionParameter):
     def _qick_setter(self, value):
         self.params.corrections.res_spec.max_averaging_increases(value)
 
+    def _dummy_getter(self):
+        return int(self.params.corrections.res_spec.max_averaging_increases())
+
+    def _dummy_setter(self, value):
+        self.params.corrections.res_spec.max_averaging_increases(value)
+
 
 @dataclass
 class MaxFitParamError(CorrectionParameter):
@@ -133,6 +169,12 @@ class MaxFitParamError(CorrectionParameter):
         return self.params.corrections.res_spec.max_fit_param_error()
 
     def _qick_setter(self, value):
+        self.params.corrections.res_spec.max_fit_param_error(value)
+
+    def _dummy_getter(self):
+        return self.params.corrections.res_spec.max_fit_param_error()
+
+    def _dummy_setter(self, value):
         self.params.corrections.res_spec.max_fit_param_error(value)
 
 
@@ -361,7 +403,13 @@ class ResonatorSpectroscopy(ProtocolOperation):
             noise_amp = self._SIM_NOISE_AMP
         )
 
-        sweep = sweep_parameter("frequencies", frequencies + self.readout_lo(), record_as(generator.generate, "signal"))
+        sweep = sweep_parameter("frequencies", frequencies, record_as(generator.generate, "signal"))
+        # Removed "+ self.readout_lo()" after "frequencies" in above line,
+        # because it was causing AttributeError due to readout_lo not being registered,
+        # and deleting it is preferable to registering it because if we did register it,
+        # then it could get applied to all platforms, including qick, 
+        # but qick may not have a readout_lo parameter,
+        # and it is not necessary for the dummy measurement anyway.
         loc, _ = run_and_save_sweep(sweep, "data", self.name)
 
         logger.info("Dummy measurement complete")

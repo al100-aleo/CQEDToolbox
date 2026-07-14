@@ -44,6 +44,8 @@ class SNRMinThreshold(CorrectionParameter):
 
     def _qick_getter(self): return self.params.corrections.t2r.snr_min()
     def _qick_setter(self, v): self.params.corrections.t2r.snr_min(v)
+    def _dummy_getter(self): return self.params.corrections.t2r.snr_min()
+    def _dummy_setter(self, v): self.params.corrections.t2r.snr_min(v)
 
 
 @dataclass
@@ -53,6 +55,8 @@ class MaxFitParamError(CorrectionParameter):
 
     def _qick_getter(self): return self.params.corrections.t2r.max_fit_param_error()
     def _qick_setter(self, v): self.params.corrections.t2r.max_fit_param_error(v)
+    def _dummy_getter(self): return self.params.corrections.t2r.max_fit_param_error()
+    def _dummy_setter(self, v): self.params.corrections.t2r.max_fit_param_error(v)
 
 
 @dataclass
@@ -62,6 +66,8 @@ class AveragingIncreaseFactor(CorrectionParameter):
 
     def _qick_getter(self): return self.params.corrections.t2r.averaging_factor()
     def _qick_setter(self, v): self.params.corrections.t2r.averaging_factor(v)
+    def _dummy_getter(self): return self.params.corrections.t2r.averaging_factor()
+    def _dummy_setter(self, v): self.params.corrections.t2r.averaging_factor(v)
 
 
 @dataclass
@@ -71,6 +77,8 @@ class MaxAveragingIncreases(CorrectionParameter):
 
     def _qick_getter(self): return int(self.params.corrections.t2r.max_averaging_increases())
     def _qick_setter(self, v): self.params.corrections.t2r.max_averaging_increases(v)
+    def _dummy_getter(self): return int(self.params.corrections.t2r.max_averaging_increases())
+    def _dummy_setter(self, v): self.params.corrections.t2r.max_averaging_increases(v)
 
 
 # ---------------------------------------------------------------------------

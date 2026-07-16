@@ -12,7 +12,7 @@ from labcore.analysis.fitfuncs.generic import Gaussian
 from labcore.measurement.storage import run_and_save_sweep
 from labcore.measurement.sweep import sweep_parameter
 from labcore.measurement.record import record_as
-from labcore.data.datadict_storage import datadict_from_hdf5
+from labcore.data.datadict_storage import datadict_from_hdf5, load_as_xr
 
 from labcore.protocols.base import (ProtocolOperation, OperationStatus, serialize_fit_params,
                                     CorrectionParameter, CheckResult, Correction, EvaluateResult)
@@ -26,6 +26,7 @@ from cqedtoolbox.protocols.parameters import (
     ReadoutGain,
     ReadoutLength
 )
+from cqedtoolbox.measurement_lib.opx.advanced.qubit_tuneup import measure_pi_spec
 from cqedtoolbox.measurement_lib.qick.single_transmon_v2 import PiSpecProgram
 
 
@@ -48,6 +49,12 @@ class PiSpecSNRThreshold(CorrectionParameter):
 
     def _dummy_setter(self, value):
         self.params.corrections.pi_spec.snr(value)
+        
+    def _opx_getter(self):
+        return self.params.corrections.pi_spec.snr()
+
+    def _opx_setter(self, value):
+        self.params.corrections.pi_spec.snr(value)
 
 
 @dataclass
@@ -65,6 +72,12 @@ class PiSpecMaxFitParamError(CorrectionParameter):
         return self.params.corrections.pi_spec.max_fit_param_error()
 
     def _dummy_setter(self, value):
+        self.params.corrections.pi_spec.max_fit_param_error(value)
+        
+    def _opx_getter(self):
+        return self.params.corrections.pi_spec.max_fit_param_error()
+
+    def _opx_setter(self, value):
         self.params.corrections.pi_spec.max_fit_param_error(value)
 
 
@@ -84,6 +97,12 @@ class PiSpecAveragingFactor(CorrectionParameter):
 
     def _dummy_setter(self, value):
         self.params.corrections.pi_spec.averaging_factor(value)
+        
+    def _opx_getter(self):
+        return self.params.corrections.pi_spec.averaging_factor()
+
+    def _opx_setter(self, value):
+        self.params.corrections.pi_spec.averaging_factor(value)
 
 
 @dataclass
@@ -101,6 +120,12 @@ class PiSpecMaxAveragingIncreases(CorrectionParameter):
         return int(self.params.corrections.pi_spec.max_averaging_increases())
 
     def _dummy_setter(self, value):
+        self.params.corrections.pi_spec.max_averaging_increases(value)
+        
+    def _opx_getter(self):
+        return int(self.params.corrections.pi_spec.max_averaging_increases())
+
+    def _opx_setter(self, value):
         self.params.corrections.pi_spec.max_averaging_increases(value)
 
 
@@ -139,6 +164,7 @@ class PiSpectroscopy(ProtocolOperation):
 
     def __init__(self, params):
         super().__init__()
+        self.params = params
 
         self._register_inputs(
             repetitions=Repetition(params),
@@ -213,6 +239,12 @@ class PiSpectroscopy(ProtocolOperation):
 
         return loc
 
+    def _measure_opx(self) -> Path:
+        logger.info("Starting opx pi spectroscopy measurement")
+        loc = measure_pi_spec()
+        logger.info("Measurement complete")
+        return loc
+
     def _load_data_qick(self):
         path = self.data_loc / "data.ddh5"
         if not path.exists():
@@ -221,6 +253,11 @@ class PiSpectroscopy(ProtocolOperation):
 
         self.independents["frequencies"] = data["freq"]["values"]
         self.dependents["signal"] = data["signal"]["values"]
+
+    def _load_data_opx(self):
+        data = load_as_xr(self.data_loc).mean("repetition")
+        self.independents["frequencies"] = data["ssb_frequency"].values
+        self.dependents["signal"] = data["signal_Re"].values + 1j * data["signal_Im"].values
 
     def _fit_gaussian_components(self, frequencies, signal, fig_title="") -> tuple:
         """

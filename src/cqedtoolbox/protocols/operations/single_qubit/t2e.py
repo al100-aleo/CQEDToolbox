@@ -144,10 +144,8 @@ class IncreaseAveragingCorrection(Correction):
     description = "Increase number of repetitions and reset echo count"
     triggered_by = "quality_check"
 
-    def __init__(self, reps_param, echo_correction: IncreaseEchosCorrection,
-                 factor_param, max_increases_param):
+    def __init__(self, reps_param, factor_param, max_increases_param):
         self.reps_param = reps_param
-        self.echo_correction = echo_correction
         self.factor_param = factor_param
         self.max_increases_param = max_increases_param
         self._original_reps: int | None = None
@@ -166,7 +164,6 @@ class IncreaseAveragingCorrection(Correction):
         self.reps_param(new)
         self._count += 1
         self._last_change = f"reps: {old} → {new}"
-        self.echo_correction.reset()
 
     def report_output(self) -> str:
         return self._last_change
@@ -208,14 +205,8 @@ class T2EOperation(ProtocolOperation):
             max_averaging_increases=MaxAveragingIncreases(params),
         )
 
-        self._increase_echos = IncreaseEchosCorrection(
-            self.n_echos,
-            self.max_echos,
-        )
-
         self._increase_averaging = IncreaseAveragingCorrection(
             self.repetitions,
-            self._increase_echos,
             self.averaging_increase_factor,
             self.max_averaging_increases,
         )

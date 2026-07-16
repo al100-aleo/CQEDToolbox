@@ -12,7 +12,7 @@ from labcore.analysis.fitfuncs.generic import ExponentiallyDecayingSine
 from labcore.measurement.storage import run_and_save_sweep
 from labcore.measurement.sweep import sweep_parameter
 from labcore.measurement.record import record_as
-from labcore.data.datadict_storage import datadict_from_hdf5
+from labcore.data.datadict_storage import datadict_from_hdf5, load_as_xr
 
 from labcore.protocols.base import (
     ProtocolOperation, serialize_fit_params,
@@ -27,6 +27,7 @@ from cqedtoolbox.protocols.parameters import (
     T2R,
     NEchos
 )
+from cqedtoolbox.measurement_lib.opx.advanced.qubit_tuneup import measure_t2
 from cqedtoolbox.measurement_lib.qick.single_transmon_v2 import T2RProgram
 
 
@@ -46,6 +47,8 @@ class SNRMinThreshold(CorrectionParameter):
     def _qick_setter(self, v): self.params.corrections.t2r.snr_min(v)
     def _dummy_getter(self): return self.params.corrections.t2r.snr_min()
     def _dummy_setter(self, v): self.params.corrections.t2r.snr_min(v)
+    def _opx_getter(self): return self.params.corrections.t2r.snr_min()
+    def _opx_setter(self, v): self.params.corrections.t2r.snr_min(v)
 
 
 @dataclass
@@ -57,6 +60,8 @@ class MaxFitParamError(CorrectionParameter):
     def _qick_setter(self, v): self.params.corrections.t2r.max_fit_param_error(v)
     def _dummy_getter(self): return self.params.corrections.t2r.max_fit_param_error()
     def _dummy_setter(self, v): self.params.corrections.t2r.max_fit_param_error(v)
+    def _opx_getter(self): return self.params.corrections.t2r.max_fit_param_error()
+    def _opx_setter(self, v): self.params.corrections.t2r.max_fit_param_error(v)
 
 
 @dataclass
@@ -68,6 +73,8 @@ class AveragingIncreaseFactor(CorrectionParameter):
     def _qick_setter(self, v): self.params.corrections.t2r.averaging_factor(v)
     def _dummy_getter(self): return self.params.corrections.t2r.averaging_factor()
     def _dummy_setter(self, v): self.params.corrections.t2r.averaging_factor(v)
+    def _opx_getter(self): return self.params.corrections.t2r.averaging_factor()
+    def _opx_setter(self, v): self.params.corrections.t2r.averaging_factor(v)
 
 
 @dataclass
@@ -79,6 +86,8 @@ class MaxAveragingIncreases(CorrectionParameter):
     def _qick_setter(self, v): self.params.corrections.t2r.max_averaging_increases(v)
     def _dummy_getter(self): return int(self.params.corrections.t2r.max_averaging_increases())
     def _dummy_setter(self, v): self.params.corrections.t2r.max_averaging_increases(v)
+    def _opx_getter(self): return int(self.params.corrections.t2r.max_averaging_increases())
+    def _opx_setter(self, v): self.params.corrections.t2r.max_averaging_increases(v)
 
 
 # ---------------------------------------------------------------------------
@@ -201,6 +210,12 @@ class T2ROperation(ProtocolOperation):
         logger.info("Measurement complete")
         return loc
 
+    def _measure_opx(self) -> Path:
+        logger.info("Starting opx T2 Ramsey measurement")
+        loc = measure_t2(n_echos=0)
+        logger.info("Measurement complete")
+        return loc
+
     def _load_data_qick(self):
         path = self.data_loc / "data.ddh5"
         if not path.exists():
@@ -209,6 +224,11 @@ class T2ROperation(ProtocolOperation):
 
         self.independents["delays"] = data["t"]["values"]
         self.dependents["signal"] = data["signal"]["values"]
+
+    def _load_data_opx(self):
+        data = load_as_xr(self.data_loc).mean("repetition")
+        self.independents["delays"] = data["delay"].values
+        self.dependents["signal"] = data["signal_Re"].values + 1j * data["signal_Im"].values
 
     def _fit_exponentially_decaying_sine_components(self, delays, signal, fig_title="") -> tuple:
         """

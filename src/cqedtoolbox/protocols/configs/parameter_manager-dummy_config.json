@@ -17,7 +17,7 @@
   },
   "parameter_manager.corrections.pi_spec.snr": {
     "unit": "",
-    "value": 3
+    "value": 1.5
   },
   "parameter_manager.corrections.power_rabi.averaging_factor": {
     "unit": "",
@@ -57,7 +57,7 @@
   },
   "parameter_manager.corrections.power_rabi.snr": {
     "unit": "",
-    "value": 3
+    "value": 1.5
   },
   "parameter_manager.corrections.res_spec.averaging_factor": {
     "unit": "",
@@ -85,7 +85,7 @@
   },
   "parameter_manager.corrections.res_spec.snr": {
     "unit": "",
-    "value": 3
+    "value": 1.5
   },
   "parameter_manager.corrections.res_spec_after_pi.detuning_threshold": {
     "unit": "MHz",
@@ -97,7 +97,7 @@
   },
   "parameter_manager.corrections.res_spec_after_pi.snr": {
     "unit": "",
-    "value": 3
+    "value": 1.5
   },
   "parameter_manager.corrections.res_spec_vs_gain.high_snr": {
     "unit": "",
@@ -165,7 +165,7 @@
   },
   "parameter_manager.corrections.sat_spec.snr": {
     "unit": "",
-    "value": 3
+    "value": 1.5
   },
   "parameter_manager.corrections.t1.averaging_factor": {
     "unit": "",
@@ -189,7 +189,7 @@
   },
   "parameter_manager.corrections.t1.snr_min": {
     "unit": "",
-    "value": 3
+    "value": 1.5
   },
   "parameter_manager.corrections.t2e.averaging_factor": {
     "unit": "",
@@ -209,7 +209,7 @@
   },
   "parameter_manager.corrections.t2e.snr_min": {
     "unit": "",
-    "value": 3
+    "value": 1.5
   },
   "parameter_manager.corrections.t2r.averaging_factor": {
     "unit": "",
@@ -225,7 +225,7 @@
   },
   "parameter_manager.corrections.t2r.snr_min": {
     "unit": "",
-    "value": 3
+    "value": 1.5
   },
   "parameter_manager.msmt_params.delay": {
     "unit": "us",

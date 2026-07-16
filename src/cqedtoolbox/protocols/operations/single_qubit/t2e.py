@@ -208,6 +208,11 @@ class T2EOperation(ProtocolOperation):
             max_averaging_increases=MaxAveragingIncreases(params),
         )
 
+        self._increase_echos = IncreaseEchosCorrection(
+            self.n_echos,
+            self.max_echos,
+        )
+
         self._increase_averaging = IncreaseAveragingCorrection(
             self.repetitions,
             self._increase_echos,

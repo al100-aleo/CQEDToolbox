@@ -335,17 +335,9 @@
     "unit": "",
     "value": 100
   },
-  "parameter_manager.qubit.end_f": {
-    "unit": "Hz",
-    "value": 5010000000.0
-  },
   "parameter_manager.qubit.f": {
     "unit": "Hz",
     "value": 5000000000.0
-  },
-  "parameter_manager.qubit.start_f": {
-    "unit": "Hz",
-    "value": 4990000000.0
   },
   "parameter_manager.readout.end_g": {
     "unit": "",

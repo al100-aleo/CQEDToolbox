@@ -134,7 +134,7 @@ class T2ROperation(ProtocolOperation):
     _SIM_DETUNING = 0.05
     _SIM_AMP = 0.5
     _SIM_NOISE_AMP = 0.02
-
+    _SIM_OFFSET = 0.4
     def __init__(self, params):
         super().__init__()
 
@@ -188,7 +188,7 @@ class T2ROperation(ProtocolOperation):
         logger.info("Starting dummy T2 Ramsey measurement")
         delays = np.linspace(0, 5 * self._SIM_T2R, int(self.steps()))
         signal_gen = lambda delays: (self._SIM_AMP * np.exp(-delays / self._SIM_T2R) * np.exp(2j * np.pi * self._SIM_DETUNING * delays)
-                  + self._SIM_NOISE_AMP * (np.random.randn() + 1j * np.random.randn()))
+                  + self._SIM_OFFSET + self._SIM_NOISE_AMP * (np.random.randn() + 1j * np.random.randn()))
         sweep = sweep_parameter("delays", delays, record_as(signal_gen, "signal"))
         loc, _ = run_and_save_sweep(sweep, "data", self.name)
         logger.info("Dummy measurement complete")

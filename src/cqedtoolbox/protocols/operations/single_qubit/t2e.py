@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 plt.switch_backend("agg")
 
 from labcore.analysis import DatasetAnalysis
-from labcore.analysis.fitfuncs.generic import ExponentiallyDecayingSine
+from labcore.analysis.fitfuncs.generic import ExponentialDecay
 from labcore.measurement.storage import run_and_save_sweep
 from labcore.measurement.sweep import sweep_parameter
 from labcore.measurement.record import record_as
@@ -177,8 +177,9 @@ class T2EOperation(ProtocolOperation):
 
     _SIM_T2E = 30.0
     _SIM_DETUNING = 0.05
-    _SIM_AMP = 0.5
+    _SIM_AMP = 0.35 + 0.35j
     _SIM_NOISE_AMP = 0.02
+    _SIM_OFFSET = 0.4 + 0.4j
 
     def __init__(self, params):
         super().__init__()
@@ -234,8 +235,8 @@ class T2EOperation(ProtocolOperation):
     def _measure_dummy(self) -> Path:
         logger.info("Starting dummy T2 Echo measurement")
         delays = np.linspace(0, 5 * self._SIM_T2E, int(self.steps()))
-        signal_gen = lambda delays: (self._SIM_AMP * np.exp(-delays / self._SIM_T2E) * np.exp(2j * np.pi * self._SIM_DETUNING * delays)
-                  + self._SIM_NOISE_AMP * (np.random.randn() + 1j * np.random.randn()))
+        signal_gen = lambda delays: (self._SIM_AMP * np.exp(-delays / self._SIM_T2E)
+                  + self._SIM_OFFSET + self._SIM_NOISE_AMP * (np.random.randn() + 1j * np.random.randn()))
         sweep = sweep_parameter("delays", delays, record_as(signal_gen, "signal"))
         loc, _ = run_and_save_sweep(sweep, "data", self.name)
         logger.info("Dummy measurement complete")
@@ -277,9 +278,9 @@ class T2EOperation(ProtocolOperation):
         self.independents["delays"] = data["delay"].values
         self.dependents["signal"] = data["signal_Re"].values + 1j * data["signal_Im"].values
 
-    def _fit_exponentially_decaying_sine_components(self, delays, signal, fig_title="") -> tuple:
+    def _fit_exponential_decay_components(self, delays, signal, fig_title="") -> tuple:
         """
-        Fit real, imaginary, and magnitude components with ExponentiallyDecayingSine fits.
+        Fit real, imaginary, and magnitude components with ExponentialDecay fits.
         Returns (fit_result_re, fit_result_imag, fit_result_mag, fig_re, fig_imag, fig_mag)
         """
         signal_re = signal.real
@@ -287,7 +288,7 @@ class T2EOperation(ProtocolOperation):
         signal_mag = np.abs(signal)
 
         # Fit real part
-        fit_re = ExponentiallyDecayingSine(delays, signal_re)
+        fit_re = ExponentialDecay(delays, signal_re)
         fit_result_re = fit_re.run(fit_re)
         fit_curve_re = fit_result_re.eval()
         residuals_re = signal_re - fit_curve_re
@@ -296,7 +297,7 @@ class T2EOperation(ProtocolOperation):
         snr_re = np.abs(amp_re / (4 * noise_re))
 
         # Fit imaginary part
-        fit_imag = ExponentiallyDecayingSine(delays, signal_imag)
+        fit_imag = ExponentialDecay(delays, signal_imag)
         fit_result_imag = fit_imag.run(fit_imag)
         fit_curve_imag = fit_result_imag.eval()
         residuals_imag = signal_imag - fit_curve_imag
@@ -305,7 +306,7 @@ class T2EOperation(ProtocolOperation):
         snr_imag = np.abs(amp_imag / (4 * noise_imag))
 
         # Fit magnitude
-        fit_mag = ExponentiallyDecayingSine(delays, signal_mag)
+        fit_mag = ExponentialDecay(delays, signal_mag)
         fit_result_mag = fit_mag.run(fit_mag)
         fit_curve_mag = fit_result_mag.eval()
         residuals_mag = signal_mag - fit_curve_mag
@@ -349,7 +350,7 @@ class T2EOperation(ProtocolOperation):
 
     def analyze(self):
         with DatasetAnalysis(self.data_loc, self.name) as ds:
-            result_re, result_imag, result_mag, fig_re, fig_imag, fig_mag = self._fit_exponentially_decaying_sine_components(
+            result_re, result_imag, result_mag, fig_re, fig_imag, fig_mag = self._fit_exponential_decay_components(
                 self.independents["delays"],
                 self.dependents["signal"],
                 "T2 Echo Measurement"

@@ -132,9 +132,9 @@ class T2ROperation(ProtocolOperation):
 
     _SIM_T2R = 10.0
     _SIM_DETUNING = 0.05
-    _SIM_AMP = 0.5
+    _SIM_AMP = 0.35 + 0.35j
     _SIM_NOISE_AMP = 0.02
-    _SIM_OFFSET = 0.4
+    _SIM_OFFSET = 0.4 + 0.4j
     def __init__(self, params):
         super().__init__()
 

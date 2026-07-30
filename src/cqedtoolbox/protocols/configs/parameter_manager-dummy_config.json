@@ -321,7 +321,7 @@
   },
   "parameter_manager.q01.sat_spec_steps": {
     "unit": "",
-    "value": 100
+    "value": 300
   },
   "parameter_manager.q01.t1_steps": {
     "unit": "",

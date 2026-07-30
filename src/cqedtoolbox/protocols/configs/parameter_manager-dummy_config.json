@@ -277,11 +277,11 @@
   },
   "parameter_manager.q01.power_rabi_end": {
     "unit": "",
-    "value": 0.75
+    "value": 2.0
   },
   "parameter_manager.q01.power_rabi_start": {
     "unit": "",
-    "value": 0.25
+    "value": 0.0
   },
   "parameter_manager.q01.pulses.const.gain": {
     "unit": "",

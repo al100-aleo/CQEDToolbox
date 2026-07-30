@@ -320,7 +320,7 @@ class SyntheticPowerRabiData:
 
 class PowerRabi(ProtocolOperation):
 
-    _SIM_PI_AMP = 0.3
+    _SIM_PI_AMP = 0.5
     _SIM_NOISE_AMP = 0.05
 
     def __init__(self, params):

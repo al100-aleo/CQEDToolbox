@@ -195,8 +195,9 @@ class IncreaseAveragingCorrection(Correction):
 class T1Operation(ProtocolOperation):
 
     _SIM_T1 = 20.0
-    _SIM_AMP = 0.5
+    _SIM_AMP = 0.35 + 0.35j
     _SIM_NOISE_AMP = 0.02
+    _SIM_OFFSET = 0.4 + 0.4j
 
     def __init__(self, params):
         super().__init__()
@@ -261,7 +262,7 @@ class T1Operation(ProtocolOperation):
         logger.info("Starting dummy T1 measurement")
         delays = np.linspace(0, 5 * self._SIM_T1, int(self.steps()))
         signal_gen = lambda delays: (self._SIM_AMP * np.exp(-delays / self._SIM_T1)
-                  + self._SIM_NOISE_AMP * (np.random.randn() + 1j * np.random.randn()))
+                  + self._SIM_OFFSET + self._SIM_NOISE_AMP * (np.random.randn() + 1j * np.random.randn()))
         sweep = sweep_parameter("delays", delays, record_as(signal_gen, "signal"))
         loc, _ = run_and_save_sweep(sweep, "data", self.name)
         logger.info("Dummy measurement complete")

@@ -45,6 +45,8 @@ class SNRMinThreshold(CorrectionParameter):
 
     def _qick_getter(self): return self.params.corrections.t2e.snr_min()
     def _qick_setter(self, v): self.params.corrections.t2e.snr_min(v)
+    def _dummy_getter(self): return self.params.corrections.t2e.snr_min()
+    def _dummy_setter(self, v): self.params.corrections.t2e.snr_min(v)
     def _opx_getter(self): return self.params.corrections.t2e.snr_min()
     def _opx_setter(self, v): self.params.corrections.t2e.snr_min(v)
 
@@ -56,6 +58,8 @@ class MaxFitParamError(CorrectionParameter):
 
     def _qick_getter(self): return self.params.corrections.t2e.max_fit_param_error()
     def _qick_setter(self, v): self.params.corrections.t2e.max_fit_param_error(v)
+    def _dummy_getter(self): return self.params.corrections.t2e.max_fit_param_error()
+    def _dummy_setter(self, v): self.params.corrections.t2e.max_fit_param_error(v)
     def _opx_getter(self): return self.params.corrections.t2e.max_fit_param_error()
     def _opx_setter(self, v): self.params.corrections.t2e.max_fit_param_error(v)
 
@@ -67,6 +71,8 @@ class MaxEchos(CorrectionParameter):
 
     def _qick_getter(self): return int(self.params.corrections.t2e.max_echos())
     def _qick_setter(self, v): self.params.corrections.t2e.max_echos(v)
+    def _dummy_getter(self): return int(self.params.corrections.t2e.max_echos())
+    def _dummy_setter(self, v): self.params.corrections.t2e.max_echos(v)
     def _opx_getter(self): return int(self.params.corrections.t2e.max_echos())
     def _opx_setter(self, v): self.params.corrections.t2e.max_echos(v)
 
@@ -78,6 +84,8 @@ class AveragingIncreaseFactor(CorrectionParameter):
 
     def _qick_getter(self): return self.params.corrections.t2e.averaging_factor()
     def _qick_setter(self, v): self.params.corrections.t2e.averaging_factor(v)
+    def _dummy_getter(self): return self.params.corrections.t2e.averaging_factor()
+    def _dummy_setter(self, v): self.params.corrections.t2e.averaging_factor(v)
     def _opx_getter(self): return self.params.corrections.t2e.averaging_factor()
     def _opx_setter(self, v): self.params.corrections.t2e.averaging_factor(v)
 
@@ -89,6 +97,8 @@ class MaxAveragingIncreases(CorrectionParameter):
 
     def _qick_getter(self): return int(self.params.corrections.t2e.max_averaging_increases())
     def _qick_setter(self, v): self.params.corrections.t2e.max_averaging_increases(v)
+    def _dummy_getter(self): return int(self.params.corrections.t2e.max_averaging_increases())
+    def _dummy_setter(self, v): self.params.corrections.t2e.max_averaging_increases(v)
     def _opx_getter(self): return int(self.params.corrections.t2e.max_averaging_increases())
     def _opx_setter(self, v): self.params.corrections.t2e.max_averaging_increases(v)
 
@@ -134,10 +144,8 @@ class IncreaseAveragingCorrection(Correction):
     description = "Increase number of repetitions and reset echo count"
     triggered_by = "quality_check"
 
-    def __init__(self, reps_param, echo_correction: IncreaseEchosCorrection,
-                 factor_param, max_increases_param):
+    def __init__(self, reps_param, factor_param, max_increases_param):
         self.reps_param = reps_param
-        self.echo_correction = echo_correction
         self.factor_param = factor_param
         self.max_increases_param = max_increases_param
         self._original_reps: int | None = None
@@ -156,7 +164,6 @@ class IncreaseAveragingCorrection(Correction):
         self.reps_param(new)
         self._count += 1
         self._last_change = f"reps: {old} → {new}"
-        self.echo_correction.reset()
 
     def report_output(self) -> str:
         return self._last_change
@@ -170,8 +177,9 @@ class T2EOperation(ProtocolOperation):
 
     _SIM_T2E = 30.0
     _SIM_DETUNING = 0.05
-    _SIM_AMP = 0.5
+    _SIM_AMP = 0.35 + 0.35j
     _SIM_NOISE_AMP = 0.02
+    _SIM_OFFSET = 0.4 + 0.4j
 
     def __init__(self, params):
         super().__init__()
@@ -200,7 +208,6 @@ class T2EOperation(ProtocolOperation):
 
         self._increase_averaging = IncreaseAveragingCorrection(
             self.repetitions,
-            self._increase_echos,
             self.averaging_increase_factor,
             self.max_averaging_increases,
         )
@@ -229,7 +236,7 @@ class T2EOperation(ProtocolOperation):
         logger.info("Starting dummy T2 Echo measurement")
         delays = np.linspace(0, 5 * self._SIM_T2E, int(self.steps()))
         signal_gen = lambda delays: (self._SIM_AMP * np.exp(-delays / self._SIM_T2E) * np.exp(2j * np.pi * self._SIM_DETUNING * delays)
-                  + self._SIM_NOISE_AMP * (np.random.randn() + 1j * np.random.randn()))
+                  + self._SIM_OFFSET + self._SIM_NOISE_AMP * (np.random.randn() + 1j * np.random.randn()))
         sweep = sweep_parameter("delays", delays, record_as(signal_gen, "signal"))
         loc, _ = run_and_save_sweep(sweep, "data", self.name)
         logger.info("Dummy measurement complete")

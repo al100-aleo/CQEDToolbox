@@ -47,6 +47,12 @@ class SNRThreshold(CorrectionParameter):
     def _qick_setter(self, value):
         self.params.corrections.sat_spec.snr(value)
 
+    def _dummy_getter(self):
+        return self.params.corrections.sat_spec.snr()
+
+    def _dummy_setter(self, value):
+        self.params.corrections.sat_spec.snr(value)
+
     def _opx_getter(self):
         return self.params.corrections.sat_spec.snr()
 
@@ -65,6 +71,12 @@ class MaxFitParamError(CorrectionParameter):
     def _qick_setter(self, value):
         self.params.corrections.sat_spec.max_fit_param_error(value)
 
+    def _dummy_getter(self):
+        return self.params.corrections.sat_spec.max_fit_param_error()
+
+    def _dummy_setter(self, value):
+        self.params.corrections.sat_spec.max_fit_param_error(value)
+        
     def _opx_getter(self):
         return self.params.corrections.sat_spec.max_fit_param_error()
 
@@ -83,6 +95,12 @@ class MaxWindowShifts(CorrectionParameter):
     def _qick_setter(self, value):
         self.params.corrections.sat_spec.max_window_shifts(value)
 
+    def _dummy_getter(self):
+        return int(self.params.corrections.sat_spec.max_window_shifts())
+
+    def _dummy_setter(self, value):
+        self.params.corrections.sat_spec.max_window_shifts(value)
+        
     def _opx_getter(self):
         return int(self.params.corrections.sat_spec.max_window_shifts())
 
@@ -101,6 +119,12 @@ class AveragingIncreaseFactor(CorrectionParameter):
     def _qick_setter(self, value):
         self.params.corrections.sat_spec.averaging_factor(value)
 
+    def _dummy_getter(self):
+        return self.params.corrections.sat_spec.averaging_factor()
+
+    def _dummy_setter(self, value):
+        self.params.corrections.sat_spec.averaging_factor(value)
+        
     def _opx_getter(self):
         return self.params.corrections.sat_spec.averaging_factor()
 
@@ -119,6 +143,12 @@ class MaxAveragingIncreases(CorrectionParameter):
     def _qick_setter(self, value):
         self.params.corrections.sat_spec.max_averaging_increases(value)
 
+    def _dummy_getter(self):
+        return int(self.params.corrections.sat_spec.max_averaging_increases())
+
+    def _dummy_setter(self, value):
+        self.params.corrections.sat_spec.max_averaging_increases(value)
+        
     def _opx_getter(self):
         return int(self.params.corrections.sat_spec.max_averaging_increases())
 
@@ -137,6 +167,12 @@ class SamplingIncreaseFactor(CorrectionParameter):
     def _qick_setter(self, value):
         self.params.corrections.sat_spec.sampling_factor(value)
 
+    def _dummy_getter(self):
+        return self.params.corrections.sat_spec.sampling_factor()
+
+    def _dummy_setter(self, value):
+        self.params.corrections.sat_spec.sampling_factor(value)
+        
     def _opx_getter(self):
         return self.params.corrections.sat_spec.sampling_factor()
 
@@ -155,6 +191,12 @@ class MaxSamplingIncreases(CorrectionParameter):
     def _qick_setter(self, value):
         self.params.corrections.sat_spec.max_sampling_increases(value)
 
+    def _dummy_getter(self):
+        return int(self.params.corrections.sat_spec.max_sampling_increases())
+
+    def _dummy_setter(self, value):
+        self.params.corrections.sat_spec.max_sampling_increases(value)
+        
     def _opx_getter(self):
         return int(self.params.corrections.sat_spec.max_sampling_increases())
 
@@ -173,6 +215,12 @@ class MaxPowerIncreases(CorrectionParameter):
     def _qick_setter(self, value):
         self.params.corrections.sat_spec.max_power_increases(value)
 
+    def _dummy_getter(self):
+        return int(self.params.corrections.sat_spec.max_power_increases())
+
+    def _dummy_setter(self, value):
+        self.params.corrections.sat_spec.max_power_increases(value)
+        
     def _opx_getter(self):
         return int(self.params.corrections.sat_spec.max_power_increases())
 
@@ -191,6 +239,12 @@ class PowerIncreaseFactor(CorrectionParameter):
     def _qick_setter(self, value):
         self.params.corrections.sat_spec.power_increase_factor(value)
 
+    def _dummy_getter(self):
+        return self.params.corrections.sat_spec.power_increase_factor()
+
+    def _dummy_setter(self, value):
+        self.params.corrections.sat_spec.power_increase_factor(value)
+        
     def _opx_getter(self):
         return self.params.corrections.sat_spec.power_increase_factor()
 
@@ -209,6 +263,12 @@ class SinglePeakSNRThreshold(CorrectionParameter):
     def _qick_setter(self, value):
         self.params.corrections.sat_spec.single_peak_snr(value)
 
+    def _dummy_getter(self):
+        return self.params.corrections.sat_spec.single_peak_snr()
+
+    def _dummy_setter(self, value):
+        self.params.corrections.sat_spec.single_peak_snr(value)
+        
     def _opx_getter(self):
         return self.params.corrections.sat_spec.single_peak_snr()
 
@@ -227,6 +287,12 @@ class SinglePeakMaxPowerReductions(CorrectionParameter):
     def _qick_setter(self, value):
         self.params.corrections.sat_spec.single_peak_max_reductions(value)
 
+    def _dummy_getter(self):
+        return int(self.params.corrections.sat_spec.single_peak_max_reductions())
+
+    def _dummy_setter(self, value):
+        self.params.corrections.sat_spec.single_peak_max_reductions(value)
+        
     def _opx_getter(self):
         return int(self.params.corrections.sat_spec.single_peak_max_reductions())
 
@@ -245,6 +311,12 @@ class PowerReductionFactor(CorrectionParameter):
     def _qick_setter(self, value):
         self.params.corrections.sat_spec.power_reduction_factor(value)
 
+    def _dummy_getter(self):
+        return self.params.corrections.sat_spec.power_reduction_factor()
+
+    def _dummy_setter(self, value):
+        self.params.corrections.sat_spec.power_reduction_factor(value)
+        
     def _opx_getter(self):
         return self.params.corrections.sat_spec.power_reduction_factor()
 

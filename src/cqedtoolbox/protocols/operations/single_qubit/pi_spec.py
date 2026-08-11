@@ -44,6 +44,12 @@ class PiSpecSNRThreshold(CorrectionParameter):
     def _qick_setter(self, value):
         self.params.corrections.pi_spec.snr(value)
 
+    def _dummy_getter(self):
+        return self.params.corrections.pi_spec.snr()
+
+    def _dummy_setter(self, value):
+        self.params.corrections.pi_spec.snr(value)
+        
     def _opx_getter(self):
         return self.params.corrections.pi_spec.snr()
 
@@ -62,6 +68,12 @@ class PiSpecMaxFitParamError(CorrectionParameter):
     def _qick_setter(self, value):
         self.params.corrections.pi_spec.max_fit_param_error(value)
 
+    def _dummy_getter(self):
+        return self.params.corrections.pi_spec.max_fit_param_error()
+
+    def _dummy_setter(self, value):
+        self.params.corrections.pi_spec.max_fit_param_error(value)
+        
     def _opx_getter(self):
         return self.params.corrections.pi_spec.max_fit_param_error()
 
@@ -80,6 +92,12 @@ class PiSpecAveragingFactor(CorrectionParameter):
     def _qick_setter(self, value):
         self.params.corrections.pi_spec.averaging_factor(value)
 
+    def _dummy_getter(self):
+        return self.params.corrections.pi_spec.averaging_factor()
+
+    def _dummy_setter(self, value):
+        self.params.corrections.pi_spec.averaging_factor(value)
+        
     def _opx_getter(self):
         return self.params.corrections.pi_spec.averaging_factor()
 
@@ -98,6 +116,12 @@ class PiSpecMaxAveragingIncreases(CorrectionParameter):
     def _qick_setter(self, value):
         self.params.corrections.pi_spec.max_averaging_increases(value)
 
+    def _dummy_getter(self):
+        return int(self.params.corrections.pi_spec.max_averaging_increases())
+
+    def _dummy_setter(self, value):
+        self.params.corrections.pi_spec.max_averaging_increases(value)
+        
     def _opx_getter(self):
         return int(self.params.corrections.pi_spec.max_averaging_increases())
 

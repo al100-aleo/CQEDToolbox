@@ -43,6 +43,12 @@ class ResSpecVsGainSNRThreshold(CorrectionParameter):
     def _qick_setter(self, v):
         self.params.corrections.res_spec_vs_gain.snr(v)
 
+    def _dummy_getter(self):
+        return self.params.corrections.res_spec_vs_gain.snr()
+
+    def _dummy_setter(self, v):
+        self.params.corrections.res_spec_vs_gain.snr(v)
+        
     def _opx_getter(self):
         return self.params.corrections.res_spec_vs_gain.snr()
 
@@ -61,6 +67,12 @@ class ResSpecVsGainMaxFitParamError(CorrectionParameter):
     def _qick_setter(self, v):
         self.params.corrections.res_spec_vs_gain.max_fit_param_error(v)
 
+    def _dummy_getter(self):
+        return self.params.corrections.res_spec_vs_gain.max_fit_param_error()
+
+    def _dummy_setter(self, v):
+        self.params.corrections.res_spec_vs_gain.max_fit_param_error(v)
+        
     def _opx_getter(self):
         return self.params.corrections.res_spec_vs_gain.max_fit_param_error()
 
@@ -79,6 +91,12 @@ class ResSpecVsGainHighSNRThreshold(CorrectionParameter):
     def _qick_setter(self, v):
         self.params.corrections.res_spec_vs_gain.high_snr(v)
 
+    def _dummy_getter(self):
+        return self.params.corrections.res_spec_vs_gain.high_snr()
+
+    def _dummy_setter(self, v):
+        self.params.corrections.res_spec_vs_gain.high_snr(v)
+        
     def _opx_getter(self):
         return self.params.corrections.res_spec_vs_gain.high_snr()
 
@@ -97,6 +115,12 @@ class ResSpecVsGainRepetitionFactor(CorrectionParameter):
     def _qick_setter(self, v):
         self.params.corrections.res_spec_vs_gain.rep_factor(v)
 
+    def _dummy_getter(self):
+        return self.params.corrections.res_spec_vs_gain.rep_factor()
+
+    def _dummy_setter(self, v):
+        self.params.corrections.res_spec_vs_gain.rep_factor(v)
+        
     def _opx_getter(self):
         return self.params.corrections.res_spec_vs_gain.rep_factor()
 
@@ -115,6 +139,12 @@ class ResSpecVsGainMaxRepetitionIncreases(CorrectionParameter):
     def _qick_setter(self, v):
         self.params.corrections.res_spec_vs_gain.max_rep_increases(v)
 
+    def _dummy_getter(self):
+        return int(self.params.corrections.res_spec_vs_gain.max_rep_increases())
+
+    def _dummy_setter(self, v):
+        self.params.corrections.res_spec_vs_gain.max_rep_increases(v)
+        
     def _opx_getter(self):
         return int(self.params.corrections.res_spec_vs_gain.max_rep_increases())
 

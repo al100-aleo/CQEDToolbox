@@ -48,6 +48,12 @@ class ResSpecAfterPiSNRThreshold(CorrectionParameter):
     def _qick_setter(self, value):
         self.params.corrections.res_spec_after_pi.snr(value)
 
+    def _dummy_getter(self):
+        return self.params.corrections.res_spec_after_pi.snr()
+
+    def _dummy_setter(self, value):
+        self.params.corrections.res_spec_after_pi.snr(value)
+        
     def _opx_getter(self):
         return self.params.corrections.res_spec_after_pi.snr()
 
@@ -66,6 +72,12 @@ class ResSpecAfterPiMaxFitParamError(CorrectionParameter):
     def _qick_setter(self, value):
         self.params.corrections.res_spec_after_pi.max_fit_param_error(value)
 
+    def _dummy_getter(self):
+        return self.params.corrections.res_spec_after_pi.max_fit_param_error()
+
+    def _dummy_setter(self, value):
+        self.params.corrections.res_spec_after_pi.max_fit_param_error(value)
+        
     def _opx_getter(self):
         return self.params.corrections.res_spec_after_pi.max_fit_param_error()
 
@@ -84,6 +96,12 @@ class DetuningThreshold(CorrectionParameter):
     def _qick_setter(self, value):
         self.params.corrections.res_spec_after_pi.detuning_threshold(value)
 
+    def _dummy_getter(self):
+        return self.params.corrections.res_spec_after_pi.detuning_threshold()
+
+    def _dummy_setter(self, value):
+        self.params.corrections.res_spec_after_pi.detuning_threshold(value)
+        
     def _opx_getter(self):
         return self.params.corrections.res_spec_after_pi.detuning_threshold()
 
